@@ -1,0 +1,31 @@
+name: Daily 0DTE Channel Info
+
+on:
+  schedule:
+    # 7:00 AM EST  = 12:00 UTC (Nov–Mar)
+    # 8:00 AM EDT  = 12:00 UTC (Mar–Nov)
+    # To fire at exactly 7 AM year-round, see README for the two-cron trick.
+    - cron: '0 12 * * 1-5'
+  workflow_dispatch:   # lets you trigger manually from the Actions tab
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Send channel-info message
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python send_channel_info.py
