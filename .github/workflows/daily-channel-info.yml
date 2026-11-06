@@ -2,10 +2,8 @@ name: Daily 0DTE Channel Info
 
 on:
   schedule:
-    # 7:00 AM EST  = 12:00 UTC (Nov–Mar)
-    # 8:00 AM EDT  = 12:00 UTC (Mar–Nov)
-    # To fire at exactly 7 AM year-round, see README for the two-cron trick.
-    - cron: '0 12 * * 1-5'
+    - cron: '0 12 * * 1-5'   # 7:00 AM EST (Nov–Mar)
+    - cron: '0 11 * * 1-5'   # 7:00 AM EDT (Mar–Nov)
   workflow_dispatch:   # lets you trigger manually from the Actions tab
 
 jobs:
